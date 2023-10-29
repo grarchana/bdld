@@ -193,13 +193,15 @@ def init_particles(options: Dict, ld: LdType) -> None:
     print(f"Adding {options['number']} particles with mass {mass}\n")
     if options["initial-distribution"] == "random-global":
         print("Distributed randomly in whole potential range\n")
-        rng = np.random.default_rng(options["seed"])
+        #rng = np.random.default_rng(options["seed"])
+        rng = np.random.Generator(np.random.Philox("seed"))
         for _ in range(options["number"]):
             pos = [rng.uniform(start, end) for start, end in ld.pot.ranges]
             ld.add_particle(pos, mass)
     elif options["initial-distribution"] == "random-pos":
         print("Distributed randomly on specified positions\n")
-        rng = np.random.default_rng(options["seed"])
+        #rng = np.random.default_rng(options["seed"])
+        rng = np.random.Generator(np.random.Philox("seed"))
         init_pos_choices = [pos for key, pos in options.items() if "pos" in key]
         for _ in range(options["number"]):
             ld.add_particle(rng.choice(init_pos_choices, axis=0), mass)
