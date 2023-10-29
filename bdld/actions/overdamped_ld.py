@@ -58,7 +58,8 @@ class OverdampedLD(Action):
         self.dt: float = dt
         self.kt: float = 1.0
         self.noise_factor: float = np.sqrt(2 * self.dt)  # calculate only once
-        self.rng: np.random.Generator = np.random.default_rng(seed)
+        #self.rng: np.random.Generator = np.random.default_rng(seed)
+        self.rng: np.random.Generator = np.random.Generator(np.random.Philox(seed))
         print(
             f"Setting up overdamped Langevin dynamics\n"
             f"Parameters:\n"

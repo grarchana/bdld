@@ -67,7 +67,8 @@ class BussiParinelloLD(Action):
         self.kt: float = kt
         self.friction: float = friction
         self.c1: float = np.exp(-0.5 * friction * dt)
-        self.rng: np.random.Generator = np.random.default_rng(seed)
+        #self.rng: np.random.Generator = np.random.default_rng(seed)
+        self.rng: np.random.Generator = np.random.Generator(np.random.Philox(seed))
         print(
             f"Setting up Langevin dynamics with Bussi-Parinello thermostat\n"
             f"Parameters:\n"
