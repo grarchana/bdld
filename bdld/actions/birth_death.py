@@ -95,7 +95,8 @@ class BirthDeath(Action):
         # set default only here to allow passing None as argument
         self.rate_fac: float = rate_fac or 1.0
         self.recalc_probs: bool = recalc_probs
-        self.rng: np.random.Generator = np.random.default_rng(seed)
+        #self.rng: np.random.Generator = np.random.default_rng(seed)
+        self.rng: np.random.Generator = np.random.Generator(np.random.PCG64DXSM(seed))
         self.stats_stride: Optional[int] = stats_stride
         self.stats = self.Stats(self, stats_filename)
         print(
