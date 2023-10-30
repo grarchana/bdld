@@ -88,26 +88,23 @@ class TemperatureSwitchPotential(Potential):
         return term1 + term2
 
     def force(self, pos: Union[List[float], np.ndarray]) -> np.ndarray:
-        """Calculate the force vector at a given position
+    """Calculate the force vector at a given position
 
-        :param pos: position to be evaluated [x, y]
-        :return: The force vector [Fx, Fy]
-        """
-        x = pos[0]
-        y = pos[1]
-        
-        # Calculate the a(x, δ) component
-        a_x = self.a(x)
-        
-        # Calculate the forces                
-        def force(self, x, y):
-        a_x = self.a(x)
-        d_a_dx = -(4 / self.delta) * np.exp(-((x - self.x0) ** 2) / self.delta) * (1 + 5 * np.exp(-((x - x0) ** 2) / self.delta)) * (x - self.x0)
+    :param pos: position to be evaluated [x, y]
+    :return: The force vector [Fx, Fy]
+    """
+    x = pos[0]
+    y = pos[1]
+    
+    # Calculate the a(x, δ) component
+    a_x = self.a(x)
+    
+    # Calculate the forces
+    d_a_dx = -(4 / self.delta) * np.exp(-((x - self.x0) ** 2) / self.delta) * (1 + 5 * np.exp(-((x - self.x0) ** 2) / self.delta)) * (x - self.x0)
 
-        force_x = -4 * self.hx * x * (x ** 2 - 1) + d_a_dx * (y ** 2 - 1) ** 2
-        force_y = -4 * (self.hy + a_x) * y * (y ** 2 - 1)
-        return np.array([force_x, force_y])
-
+    force_x = -4 * self.hx * x * (x ** 2 - 1) + d_a_dx * (y ** 2 - 1) ** 2
+    force_y = -4 * (self.hy + a_x) * y * (y ** 2 - 1)
+    return np.array([force_x, force_y])
 
    
     
