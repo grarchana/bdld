@@ -30,7 +30,7 @@ class EntropicDoubleWellPotentialscaled2(Potential):
 
     There sigma_x = sigma_y = 0.1 and a = 1 which is used as default here
 
-    The range of the potential is currently assumed to be [-1.5, 1.5] in both
+    The range of the potential is currently assumed to be [-3.0, 3.0] in both
     directions. This is somewhat arbitrary but covers the range with energies
     smaller 10 for the default parameters.
 
