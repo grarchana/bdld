@@ -51,13 +51,21 @@ class TemperatureSwitchPotential(Potential):
     directions. 
 
     """
-    def __init__(self, hx: float = 0.5, hy: float = 1.0, x0: float = 0.0, delta: float = 0.05):
-        self.hx = hx
-        self.hy = hy
-        self.x0 = x0
-        self.delta = delta
+        
+    def __init__(self, hx: float, hy: float, x0: float, delta: float) -> None:
+        """Initialize entropic double-well potential
+
+        :param hx: Scaling factor for the x-direction
+        :param hy: Scaling factor for the y-direction
+        :param x0: Center of the function a(x, δ)
+        :param delta: Parameter controlling the width of a(x, δ)
+        """
         self.n_dim = 2
-        self.ranges = [(-2.0, 2.0), (-2.0, 2.0)]    
+        self.ranges = [(-2.0,2.0),(-2.0,2.0)]
+        self.hx = hx or 0.5
+        self.hy = hy or 1.0 
+        self.x0 = x0 or 0.0
+        self.delta = delta or 0.05
 
     def a(self, x: float) -> float:
         
