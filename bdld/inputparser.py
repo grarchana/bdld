@@ -239,7 +239,7 @@ class Input:
                 InputOption("scaling-factor", float, False),
                 InputOption("n_dim", int, False, default=2),
             ]
-        elif pot_type == "entropic-double-well_scaled2":
+        elif pot_type == "entropic-double-wellscaled2":
             options = [
                 type_option,
                 InputOption("sigma_x", float, False),
