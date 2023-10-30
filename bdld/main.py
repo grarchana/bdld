@@ -142,6 +142,9 @@ def setup_potential(options: Dict) -> Potential:
     elif options["type"] == "entropic-double-well":
         pot = potential.entropic_double_well.EntropicDoubleWellPotential(
             options["sigma_x"], options["sigma_y"], options["scaling-factor"]
+    elif options["type"] == "entropic-double-well_scaled2":
+        pot = potential.entropic_double_well_scaled2.EntropicDoubleWellPotential_scaled2(
+            options["sigma_x"], options["sigma_y"], options["scaling-factor"]     
         )
     else:
         raise inputparser.OptionError(
