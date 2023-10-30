@@ -143,6 +143,10 @@ def setup_potential(options: Dict) -> Potential:
         pot = potential.entropic_double_well.EntropicDoubleWellPotential(
             options["sigma_x"], options["sigma_y"], options["scaling-factor"]
         )
+    elif options["type"] == "temperature-switch":
+        pot = potential.temperature_switch.TemperatureSwitchPotential(
+            options["hx"], options["hy"]
+        )
     else:
         raise inputparser.OptionError(
             f'Specified potential type "{options["type"]}" is not implemented',

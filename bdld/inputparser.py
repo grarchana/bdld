@@ -239,6 +239,13 @@ class Input:
                 InputOption("scaling-factor", float, False),
                 InputOption("n_dim", int, False, default=2),
             ]
+        elif pot_type == "temperature-switch":
+            options = [
+                type_option,
+                InputOption("hx", float, False),
+                InputOption("hy", float, False),
+                InputOption("n_dim", int, False, default=2),
+            ]
         else:
             raise OptionError(
                 f'Specified potential type "{pot_type}" is not implemented',

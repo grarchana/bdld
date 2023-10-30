@@ -17,8 +17,7 @@ class TemperatureSwitchPotential(Potential):
         """Temperature Switch potential
 
     This is a 2D potential of four-well system whose slowest sdynamics changes
-    from crossing a predominately entropic barier to crossing a predominately
-    entropic barier to crossing a predominately energetic barrier given by the 
+    from crossing a predominately entropic barier to crossing a predominately energetic barrier given by the 
     equation:
 
     f(x,y) =  h_x * (x**2 - 1)**2 + (h_y + a (x,delta)) * (y**2-1)**2

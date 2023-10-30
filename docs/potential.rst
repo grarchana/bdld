@@ -86,7 +86,31 @@ The potential ranges are hardcoded to :code:`[(-1.5, 1.5), (-1.5, 1.5)]`
 **scaling-factor**: *float*, optional
   Scale the potential by the given factor, default 1.0
 
+Temperature-switch potential
+^^^^^^^^^^^^^^^^^^^^^^
+Two-Dimensional potential of four-well system whose slowest sdynamics changes from crossing a predominately 
+entropic barier to crossing a predominately energetic barrier given by the 
+equation:
 
+    f(x,y) =  h_x * (x**2 - 1)**2 + (h_y + a (x,delta)) * (y**2-1)**2
+    
+    in N=2 dimensions with 
+   
+    a(x,delta)=(1/5)*(1 + 5 * exp(-(x-x_0)**2 /delta))**2
+
+    where h_x=0.5, h_y=1.0, describe the well width in the x- and y- directions,
+    respectively.x_0=0
+
+
+This version was used in [3]_ (see Eq. 17 there)
+
+The potential ranges are hardcoded to :code:`[(-2.0, 2.0), (-2.0, 2.0)]`
+
+
+   hx: Scaling factor for the x-direction
+   hy: Scaling factor for the y-direction
+   x_0: Center of the function a(x, δ)
+   delta: Parameter controlling the width of a(x, δ)
 Examples
 ^^^^^^^^
 
@@ -149,3 +173,8 @@ References
 .. [1] Klaus Müller and Leo D. Brown. Location of saddle points and minimum energy paths by a constrained simplex optimization procedure. Theoretica Chimica Acta, 53(1), 1979.
 
 .. [2] Eq. 30 of Faradjian & Elber, J. Chem. Phys. 120, 10880 (2004), https://doi.org/10.1063/1.1738640
+
+.. [3] Eq. 17 of Banisch, R; Trstanova, Z; Bittracher, A; 
+Klus, S; Koltai, P, Applied and Computational Harmonic Analysis (2020), 48, 242-265,  https://doi.org/10.1016/j.acha.2018.05.001
+
+   
