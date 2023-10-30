@@ -10,7 +10,8 @@ import numpy as np
 from bdld.potential.potential import Potential
 
 
-class EntropicDoubleWellPotential(Potential):
+"class EntropicDoubleWellPotential(Potential):"
+class EntropicDoubleWellPotential_scaled2(Potential):
     """Entropic double-well potential
 
     This is a 2D potential with two states separated by a entropic
