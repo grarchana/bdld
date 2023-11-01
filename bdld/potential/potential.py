@@ -3,12 +3,16 @@
 import enum
 from typing import Callable, List, Union, Tuple
 import numpy as np
+
 from bdld import grid
+
 
 class BoundaryCondition(enum.Enum):
     """Enum for the different boundary conditions"""
+
     reflective = enum.auto()
     periodic = enum.auto()
+
 
 class Potential:
     """Base class for potentials
@@ -31,25 +35,28 @@ class Potential:
 
         :param pos: position to be evaluated
         :return: (energy, forces)
-        return self.energy(pos), self.force(pos)
+        """
+        return (self.energy(pos), self.force(pos))
 
     def energy(self, pos: Union[List[float], np.ndarray]) -> float:
-        """Get energy at position, needs to be overridden by derived class
+        """Get energy at position, needs to be overriden by derived class
 
         :param pos: position to be evaluated
         :return: energy
-        raise NotImplementedError("Derived potentials must implement the energy() method.")
+        """
+        raise NotImplementedError()
 
     def force(self, pos: Union[List[float], np.ndarray]) -> np.ndarray:
-        """Get energy at position, needs to be overridden by derived class
+        """Get energy at position, needs to be overriden by derived class
 
         :param pos: position to be evaluated
         :return: array with force per direction
-        raise NotImplementedError("Derived potentials must implement the force() method.")
+        """
+        raise NotImplementedError()
 
     def __str__(self) -> str:
-        """Return some description string for the potential
-        raise NotImplementedError("Derived potentials must implement the __str__() method.")
+        """Return some description string for the potential"""
+        raise NotImplementedError()
 
     def calculate_reference(
         self, pos: Union[List[np.ndarray], np.ndarray], mintozero: bool = True
@@ -60,7 +67,6 @@ class Potential:
         :param bool mintozero: shift fes minimum to zero
         :return fes: list numpy array with fes values at positions
         """
-
         fes = np.fromiter((self.energy(p) for p in pos), np.float64, len(pos))
         if mintozero:
             fes -= np.min(fes)
@@ -78,9 +84,8 @@ class Potential:
         :param ranges: List of ranges of the grid per dimension (min, max)
         :param grid_points: number of points per dimension
         :raises ValueError: if dimensions of points or ranges and potential do not match
-        :return prob: grid with normalized probabilities
+        :return prob: grid with normalized probablities
         """
-
         if len(ranges) != self.n_dim:
             raise ValueError("Dimension of ranges do not match potential")
         if len(grid_points) != self.n_dim:
@@ -88,7 +93,7 @@ class Potential:
         fes = grid.from_npoints(ranges, grid_points)
         fes.set_from_func(self.energy)
         prob = np.exp(-fes / kt)
-        # normalize with volume element from step sizes
+        # normalize with volume element from stepsizes
         prob /= np.sum(prob.data) * np.prod(prob.stepsizes)
         return prob
 
@@ -97,7 +102,6 @@ class Potential:
 
         Can be overwritten by subclasses to have custom names
         """
-
         if self.n_dim == 1:
             return ["x"]
         elif self.n_dim == 2:
@@ -118,7 +122,6 @@ class Potential:
 
         This also updates the apply_boundary_condition function
         """
-
         self._boundary_condition = cond
         self._set_boundary_condition_function()
 
@@ -174,16 +177,3 @@ class Potential:
                 pos[i] += self.ranges[i][1] - self.ranges[i][0]
             elif x > self.ranges[i][1]:
                 pos[i] -= self.ranges[i][1] - self.ranges[i][0]
-
-# Place this Potential class in your 'potential.py' file and make sure the rest of your code remains intact.
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
