@@ -41,7 +41,14 @@ class TemperatureSwitchPotential(Potential):
     The range of the potential is currently assumed to be [-2.0, 2.0] in both directions.
     """
     
-    def __init__(self, hx: float, hy: float, x0: float, delta: float) -> None:
+    #def __init__(self, hx: float, hy: float, x0: float, delta: float) -> None:
+    def __init__(
+        self,
+        hx: Optional[float] = None,
+        hy: Optional[float] = None,
+        x0: Optional[float] = None,
+        delta: Optional[float] = None,
+    ) -> None:
         """Initialize entropic double-well potential
 
         :param hx: Scaling factor for the x-direction
