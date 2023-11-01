@@ -16,7 +16,7 @@ n_steps: 200000
 type: temperature-switch
 hx: 0.5
 hy: 1.0
-x0: 0.0
+x0: 0.0  
 delta: 0.05
 
 [particles]
