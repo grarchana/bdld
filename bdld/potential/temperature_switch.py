@@ -8,7 +8,6 @@ https://doi.org/10.1016/j.acha.2018.05.001
 
 """
 
-
 from typing import List, Optional, Union
 import numpy as np
 from bdld.potential.potential import Potential
@@ -41,7 +40,6 @@ class TemperatureSwitchPotential(Potential):
     The range of the potential is currently assumed to be [-2.0, 2.0] in both directions.
     """
     
-    #def __init__(self, hx: float, hy: float, x0: float, delta: float) -> None:
     def __init__(
         self,
         hx: Optional[float] = None,
@@ -106,8 +104,18 @@ class TemperatureSwitchPotential(Potential):
         force_x = -4 * self.hx * x * (x ** 2 - 1) + d_a_dx * (y ** 2 - 1) ** 2
         force_y = -4 * (self.hy + a_x) * y * (y ** 2 - 1)
         return np.array([force_x, force_y])
-   
-    
+
+    def __str__(self) -> str:
+        """Return a description string for the Temperature Switch potential"""
+        return (
+            f"Temperature Switch Potential:\n"
+            f"  hx = {self.hx}\n"
+            f"  hy = {self.hy}\n"
+            f"  x0 = {self.x0}\n"
+            f"  delta = {self.delta}\n"
+            f"  Range: x [-2.0, 2.0], y [-2.0, 2.0]\n"
+        )
+  
     
     
     

@@ -244,6 +244,8 @@ class Input:
                 type_option,
                 InputOption("hx", float, False),
                 InputOption("hy", float, False),
+                InputOption("x0", float, False),
+                InputOption("delta", float, False),
                 InputOption("n_dim", int, False, default=2),
             ]
         else:
