@@ -54,7 +54,7 @@ class TemperatureSwitchPotential(Potential):
         :param x0: Center of the function a(x, δ)
         :param delta: Parameter controlling the width of a(x, δ)
         """
-        super().__init()
+        super().__init__()
         self.n_dim = 2
         self.ranges = [(-2.0, 2.0), (-2.0, 2.0)]
         self.hx = hx or 0.5

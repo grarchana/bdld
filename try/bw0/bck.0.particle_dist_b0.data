@@ -1,3 +1,0 @@
-#! FIELDS n_particles_0 n_particles_1
-#! SET state_0 [(-2.0, 0.0), (-2.0, 2.0)]
-#! SET state_1 [(0.0, 2.0), (-2.0, 2.0)]
