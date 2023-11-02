@@ -14,11 +14,11 @@ n_steps: 200000
 
 [potential]
 type: temperature-switch
-n_dim: 2
 hx: 0.5
 hy: 1.0
 x0: 0.0
 delta: 0.05
+n_dim: 2
 
 [particles]
 number: 1000

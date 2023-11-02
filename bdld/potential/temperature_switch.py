@@ -47,13 +47,14 @@ class TemperatureSwitchPotential(Potential):
         x0: Optional[float] = None,
         delta: Optional[float] = None,
     ) -> None:
-        """Initialize entropic double-well potential
+        """Initialize temperature-switch potential
 
         :param hx: Scaling factor for the x-direction
         :param hy: Scaling factor for the y-direction
         :param x0: Center of the function a(x, δ)
         :param delta: Parameter controlling the width of a(x, δ)
         """
+        super().__init()
         self.n_dim = 2
         self.ranges = [(-2.0, 2.0), (-2.0, 2.0)]
         self.hx = hx or 0.5
