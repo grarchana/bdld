@@ -5,7 +5,6 @@ Klus, S; Koltai, P. "Diffusion maps tailored to arbitrary non-degenerate
 Ito Processes". Applied and Computational Harmonic Analysis (2020), 48, 242-265
 
 https://doi.org/10.1016/j.acha.2018.05.001
-
 """
 
 from typing import List, Optional, Union
@@ -55,12 +54,12 @@ class TemperatureSwitchPotential(Potential):
         :param delta: Parameter controlling the width of a(x, δ)
         """
         super().__init__()
-        self.n_dim = 2
-        self.ranges = [(-2.0, 2.0), (-2.0, 2.0)]
+        self.ranges = [(-3.0, 3.0), (-3.0, 3.0)]
         self.hx = hx or 0.5
         self.hy = hy or 1.0
         self.x0 = x0 or 0.0
         self.delta = delta or 0.05
+        self.n_dim = 2
 
     def a(self, x: float) -> float:
         """Calculate a(x, δ) component of the potential
@@ -102,8 +101,8 @@ class TemperatureSwitchPotential(Potential):
         # Calculate the forces
         d_a_dx = -(4 / self.delta) * np.exp(-((x - self.x0) ** 2) / self.delta) * (1 + 5 * np.exp(-((x - self.x0) ** 2) / self.delta)) * (x - self.x0)
 
-        force_x = -4 * self.hx * x * (x ** 2 - 1) + d_a_dx * (y ** 2 - 1) ** 2
-        force_y = -4 * (self.hy + a_x) * y * (y ** 2 - 1)
+        force_x = -(4 * self.hx * x * (x ** 2 - 1) + d_a_dx * (y ** 2 - 1) ** 2)
+        force_y = -(4 * (self.hy + a_x) * y * (y ** 2 - 1))
         return np.array([force_x, force_y])
 
     def __str__(self) -> str:
@@ -114,19 +113,5 @@ class TemperatureSwitchPotential(Potential):
             f"  hy = {self.hy}\n"
             f"  x0 = {self.x0}\n"
             f"  delta = {self.delta}\n"
-            f"  Range: x [-2.0, 2.0], y [-2.0, 2.0]\n"
+            f"  Range: x [-3.0, 3.0], y [-3.0, 3.0]\n"
         )
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
