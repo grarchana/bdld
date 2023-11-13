@@ -46,6 +46,7 @@ class TemperatureSwitchPotential(Potential):
         hy: Optional[float] = None,
         x0: Optional[float] = None,
         delta: Optional[float] = None,
+        scaling_factor: Optional[float] = None,
     ) -> None:
         """Initialize temperature-switch potential
 
@@ -56,11 +57,12 @@ class TemperatureSwitchPotential(Potential):
         """
         super().__init__()
         self.n_dim = 2
-        self.ranges = [(-2.0, 2.0), (-2.0, 2.0)]
+        self.ranges = [(-3.0, 3.0), (-3.0, 3.0)]
         self.hx = hx or 0.5
         self.hy = hy or 1.0
         self.x0 = x0 or 0.0
         self.delta = delta or 0.05
+        self.b = scaling_factor or 1.0
 
     def a(self, x: float) -> float:
         """Calculate a(x, δ) component of the potential
@@ -83,8 +85,8 @@ class TemperatureSwitchPotential(Potential):
         a_x = self.a(x)
         
         # Calculate the potential energy U(x, y)
-        term1 = self.hx * (x ** 2 - 1) ** 2
-        term2 = (self.hy + a_x) * (y ** 2 - 1) ** 2
+        term1 = self.b * (self.hx * (x ** 2 - 1) ** 2)
+        term2 = self.b * ((self.hy + a_x) * (y ** 2 - 1) ** 2)
         return term1 + term2
 
     def force(self, pos: Union[List[float], np.ndarray]) -> np.ndarray:
@@ -102,8 +104,8 @@ class TemperatureSwitchPotential(Potential):
         # Calculate the forces
         d_a_dx = -(4 / self.delta) * np.exp(-((x - self.x0) ** 2) / self.delta) * (1 + 5 * np.exp(-((x - self.x0) ** 2) / self.delta)) * (x - self.x0)
 
-        force_x = -4 * self.hx * x * (x ** 2 - 1) + d_a_dx * (y ** 2 - 1) ** 2
-        force_y = -4 * (self.hy + a_x) * y * (y ** 2 - 1)
+        force_x = self.b * (-(4 * self.hx * x * (x ** 2 - 1) + d_a_dx * (y ** 2 - 1) ** 2))
+        force_y = self.b * (-(4 * (self.hy + a_x) * y * (y ** 2 - 1)))
         return np.array([force_x, force_y])
 
     def __str__(self) -> str:
@@ -114,7 +116,8 @@ class TemperatureSwitchPotential(Potential):
             f"  hy = {self.hy}\n"
             f"  x0 = {self.x0}\n"
             f"  delta = {self.delta}\n"
-            f"  Range: x [-2.0, 2.0], y [-2.0, 2.0]\n"
+            f"  Range: x [-3.0, 3.0], y [-3.0, 3.0]\n"
+            f"    b: {self.b}"
         )
   
     

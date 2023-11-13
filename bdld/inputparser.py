@@ -247,6 +247,7 @@ class Input:
                 InputOption("x0", float, False),
                 InputOption("delta", float, False),
                 InputOption("n_dim", int, False, default=2),
+                InputOption("scaling-factor", float, False),
             ]
         else:
             raise OptionError(

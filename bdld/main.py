@@ -145,7 +145,7 @@ def setup_potential(options: Dict) -> Potential:
         )
     elif options["type"] == "temperature-switch":
         pot = potential.temperature_switch.TemperatureSwitchPotential(
-            options["hx"], options["hy"], options["x0"], options["delta"]
+            options["hx"], options["hy"], options["x0"], options["delta"], options["scaling-factor"]
         )
     else:
         raise inputparser.OptionError(
