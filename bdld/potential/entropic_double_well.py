@@ -29,7 +29,7 @@ class EntropicDoubleWellPotential(Potential):
 
     There sigma_x = sigma_y = 0.1 and a = 1 which is used as default here
 
-    The range of the potential is currently assumed to be [-1.5, 1.5] in both
+    The range of the potential is currently assumed to be [-2.0, 2.0] in both
     directions. This is somewhat arbitrary but covers the range with energies
     smaller 10 for the default parameters.
 
@@ -51,7 +51,7 @@ class EntropicDoubleWellPotential(Potential):
         super().__init__()  # not actually needed but enforces having the values
 
         self.n_dim = 2
-        self.ranges = [(-1.5, 1.5), (-1.5, 1.5)]
+        self.ranges = [(-2.0, 2.0), (-2.0, 2.0)]
         self.sigma_x = sigma_x or 0.1
         self.sigma_y = sigma_y or 0.1
         self.a = scaling_factor or 1.0
