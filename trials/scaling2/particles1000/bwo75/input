@@ -1,0 +1,54 @@
+[DEFAULT]
+kt: 1
+seed: 632683 
+state1-min:-3.0,-3.0
+state1-max: 0.0,3.0
+state2-min: 0.0,-3.0
+state2-max: 3.0,3.0
+
+[ld]
+type: bussi-parinello
+timestep: 0.005
+friction: 10
+n_steps: 200000
+
+[potential]
+type: temperature-switch
+hx: 0.5
+hy: 1.0
+x0: 0.0
+delta: 0.05
+n_dim: 2
+scaling-factor: 2
+
+[particles]
+number: 1000
+initial-distribution: fractions-pos
+pos1: -1.0, 0.3
+pos2:  1.0,-0.4
+fractions: 0.1, 0.9
+
+[birth-death]
+stride: 100
+kernel-bandwidth: 0.75, 0.75
+correction-variant: multiplicative
+stats-stride: 100
+stats-filename: bd-stats_bo75.data
+
+[trajectories]
+
+[histogram]
+bins: 200,200
+min: -3.0,-3.0
+max: 3.0,3.0
+filename: histo_bo75.data
+
+[fes]
+stride: 100
+filename: fes_bo75.data
+plot-filename: fes_bo75.png
+plot-domain: 0,8
+
+[particle-distribution]
+stride: 5
+filename: particle_dist_bo75.data

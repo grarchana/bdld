@@ -302,6 +302,16 @@ def bd_prob_density(pot: Potential, bd_bw: np.ndarray, kt: float) -> Grid:
         if tmp_grid_points % 2 == 0:
             tmp_grid_points += 1  # odd number is better for convolution
         n_grid_points.append(tmp_grid_points)
+    total_grid_points = np.prod(n_grid_points)  # Total grid points calculation
+    print(f"Number of grid points used: {total_grid_points}")  # Print total grid points
+
+    # Save the total number of grid points into a data file
+    with open('grid_points_data.txt', 'w') as file:
+        file.write(f"Total Grid Points: {total_grid_points}\n")
+        file.write("Grid Points per Dimension:\n")
+        for dim, points in enumerate(n_grid_points):
+            file.write(f"Dimension {dim+1}: {points}\n")
+
     return pot.calculate_probability_density(kt, pot.ranges, n_grid_points)
 
 
