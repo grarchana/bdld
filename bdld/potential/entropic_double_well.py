@@ -51,7 +51,7 @@ class EntropicDoubleWellPotential(Potential):
         super().__init__()  # not actually needed but enforces having the values
 
         self.n_dim = 2
-        self.ranges = [(-2.0, 2.0), (-2.0, 2.0)]
+        self.ranges = [(-1.5, 1.5), (-1.5, 1.5)]
         self.sigma_x = sigma_x or 0.1
         self.sigma_y = sigma_y or 0.1
         self.a = scaling_factor or 1.0

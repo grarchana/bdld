@@ -295,7 +295,7 @@ def bd_prob_density(pot: Potential, bd_bw: np.ndarray, kt: float) -> Grid:
         min_points_gaussian = int(np.ceil((r[1] - r[0]) / (0.5 * bd_bw[dim])))
         # the large number of points is only used to calculate the correction once
         #tmp_grid_points = max(501, min_points_gaussian)
-        tmp_grid_points = 501
+        tmp_grid_points = 1001
         if tmp_grid_points % 2 == 0:
             tmp_grid_points += 1  # odd number is better for convolution
         n_grid_points.append(tmp_grid_points)
