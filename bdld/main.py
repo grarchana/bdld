@@ -147,6 +147,10 @@ def setup_potential(options: Dict) -> Potential:
         pot = potential.temperature_switch.TemperatureSwitchPotential(
             options["hx"], options["hy"], options["x0"], options["delta"], options["scaling-factor"]
         )
+    elif options["type"] == "dualchannel_doublewell":
+        pot = potential.dualchannel_doublewell.DualChannelDoubleWellPotential(
+            options["k_BH"], options["scaling-factor"]
+        )   
     else:
         raise inputparser.OptionError(
             f'Specified potential type "{options["type"]}" is not implemented',

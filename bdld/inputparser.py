@@ -249,6 +249,13 @@ class Input:
                 InputOption("n_dim", int, False, default=2),
                 InputOption("scaling-factor", float, False),
             ]
+        elif pot_type == "dualchannel-doublewell":
+            options = [
+                type_option,
+                InputOption("k_BH", float, False),
+                InputOption("n_dim", int, False, default=2),
+                InputOption("scaling-factor", float, False),
+            ]  
         else:
             raise OptionError(
                 f'Specified potential type "{pot_type}" is not implemented',
