@@ -78,7 +78,7 @@ class DualChannelDoubleWellPotential(Potential):
         force_y = -9 * (-4 * y + 4 * y**3 + 156/37 * x**2 * y + 1/90 - 2 * y * self.k_BH * np.exp(-(x**2 + y**2)))
         return np.array([force_x, force_y])
 
-     def __str__(self) -> str:
+    def __str__(self) -> str:
         """Return a description string for the Dual-channel double-well potential"""
         return (
             f"Dual-channel double-well potential:\n"
