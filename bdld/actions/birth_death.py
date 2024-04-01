@@ -131,9 +131,11 @@ class BirthDeath(Action):
             print("  using the multiplicative approximation")
             # multiplicative: approx_grid holds -log(K*pi)
             conv = dens_kernel_convolution(eq_density, self.bw, "same")
+            conv.write_to_file("conv_grid.data")
             self.approx_grid = -np.log(
                 grid.sparsify(conv, [101] * conv.n_dim, "linear")
             )
+            self.approx_grid.write_to_file("approx_grid.data")
         print()
 
     def run(self, step: int) -> None:
