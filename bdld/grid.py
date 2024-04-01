@@ -249,6 +249,20 @@ def convolve(g1: Grid, g2: Grid, mode: str = "valid", method: str = "auto") -> G
     if mode == "full":
         raise NotImplementedError
     grid.data = conv
+    
+    # Print the output directly to console
+    print("Output of Convolution:")
+    for row in grid.data:
+        print(" ".join(map(str, row)))
+
+    # Save the output to a file
+    output_filename = "convolution_output.txt"
+    with open(output_filename, "w") as file:
+        file.write("Output of Convolution:\n")
+        for row in grid.data:
+            file.write(" ".join(map(str, row)) + "\n")
+
+    print(f"Convolution output saved to '{output_filename}'.")
     return grid
 
 
