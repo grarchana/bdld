@@ -1,0 +1,49 @@
+[DEFAULT]
+kt: 1
+seed: 632683
+state1-min:-1.5,-1.5
+state1-max: 0.0,1.5
+state2-min: 0.0,-1.5
+state2-max: 1.5,1.5
+
+[ld]
+type: bussi-parinello
+timestep: 0.005
+friction: 10
+n_steps: 200000
+
+[potential]
+type: entropic-double-well
+n_dim: 2
+scaling-factor: 10
+
+[particles]
+number: 1000
+initial-distribution: fractions-pos
+pos1: -1.0, 0.3
+pos2:  1.0,-0.4
+fractions: 0.1, 0.9
+
+[birth-death]
+stride: 100
+kernel-bandwidth: 0.35, 0.35
+correction-variant: multiplicative
+stats-stride: 100
+stats-filename: bd-stats.data
+
+[trajectories]
+
+[histogram]
+bins: 200,200
+min: -1.5,-1.5
+max: 1.5,1.5
+
+[fes]
+stride: 100
+filename: fes.data
+plot-filename: fes.png
+plot-domain: 0,8
+
+[particle-distribution]
+stride: 5
+filename: particle_dist_bo35.data
