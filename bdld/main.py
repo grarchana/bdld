@@ -302,19 +302,22 @@ def bd_prob_density(pot: Potential, bd_bw: np.ndarray, kt: float) -> Grid:
         # check minimal number of points for 20 points within 5 sigma
         min_points_gaussian = int(np.ceil((r[1] - r[0]) / (0.5 * bd_bw[dim])))
         # the large number of points is only used to calculate the correction once
-        tmp_grid_points = max(501, min_points_gaussian)
+        #tmp_grid_points = max(501, min_points_gaussian)
+        tmp_grid_points = 501
         if tmp_grid_points % 2 == 0:
             tmp_grid_points += 1  # odd number is better for convolution
         n_grid_points.append(tmp_grid_points)
     total_grid_points = np.prod(n_grid_points)  # Total grid points calculation
-    print(f"Number of grid points used: {total_grid_points}")  # Print total grid points
+    #print(f"Number of grid points used: {total_grid_points}")  # Print total grid points
+    print(f"Dimension {dim + 1}: min_points_gaussian = {min_points_gaussian}, tmp_grid_points = {tmp_grid_points}")
+
 
     # Save the total number of grid points into a data file
-    with open('grid_points_data.txt', 'w') as file:
-        file.write(f"Total Grid Points: {total_grid_points}\n")
-        file.write("Grid Points per Dimension:\n")
-        for dim, points in enumerate(n_grid_points):
-            file.write(f"Dimension {dim+1}: {points}\n")
+    #with open('grid_points_data.txt', 'w') as file:
+        #file.write(f"Total Grid Points: {total_grid_points}\n")
+        #file.write("Grid Points per Dimension:\n")
+        #for dim, points in enumerate(n_grid_points):
+            #file.write(f"Dimension {dim+1}: {points}\n")
 
     return pot.calculate_probability_density(kt, pot.ranges, n_grid_points)
 
