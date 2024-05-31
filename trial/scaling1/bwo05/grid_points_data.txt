@@ -1,4 +1,0 @@
-Total Grid Points: 251001
-Grid Points per Dimension:
-Dimension 1: 501
-Dimension 2: 501
