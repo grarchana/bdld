@@ -333,3 +333,171 @@ def sparsify(g: Grid, max_points: List[int], method: str = "linear") -> Grid:
     sparse_grid = from_npoints(g.ranges, sparse_n_points)
     sparse_grid.data = g.interpolate(sparse_grid.points(), method)
     return sparse_grid
+
+
+
+
+
+
+
+
+
+
+
+ def write_to_file(
+        self, filename: str, fmt
+    ) -> None:
+        """Write data of grid to file"""
+        write_2d_sliced_to_file(self.data, self.ranges, self.stepsizes, filename, fmt)
+
+
+def stepsizes_from_npoints(
+    ranges: List[Tuple[float, float]], n_points: List[int]
+) -> List[float]:
+    """Calculate the stepsizes from the number of points and ranges
+
+    :param ranges: Ranges of the grid
+    :param n_points: number of points per dimension
+    """
+    return [(r[1] - r[0]) / (n_points[i] - 1) for i, r in enumerate(ranges)]
+
+
+def from_npoints(
+    ranges: List[Tuple[float, float]], n_points: Union[List[int], int]
+) -> Grid:
+    """Create grid from the number of points per direction
+
+    :param ranges: List with (min,max) positions of the grid
+    :param n_points: Either list with points per dimension or single value for all
+    :raises ValueError: if dimensions of ranges and number of points do not match
+    :return grid: empty grid with specified ranges and number of points
+    """
+    grid = Grid()
+    grid.n_dim = len(ranges)
+    if isinstance(n_points, int):
+        if grid.n_dim == 1:
+            n_points = [n_points]
+        else:  # expand to all dimensions
+            n_points = [n_points] * grid.n_dim
+    if len(n_points) != grid.n_dim:
+        raise ValueError("Dimensions of ranges and number of points do not match")
+    grid.n_points = copy.deepcopy(n_points)
+    grid.stepsizes = stepsizes_from_npoints(ranges, n_points)
+    grid.ranges = copy.deepcopy(ranges)
+    return grid
+
+
+def from_stepsizes(
+    ranges: List[Tuple[float, float]],
+    stepsizes: Union[List[float], float],
+    shrink: bool = False,
+) -> Grid:
+    """Create grid from stepsizes between data points
+
+    If the stepsizes doesn't exactly fit the ranges, the upper grid ranges are extended by default
+
+    :param ranges: List with (min,max) positions of the grid
+    :param stepsizes: Either list with stepsizes per dimension or single value for all
+    :param shrink: Shrink ranges instead of expanding if stepsizes doesn't fit exactly
+    """
+    grid = Grid()
+    grid.n_dim = len(ranges)
+    if isinstance(stepsizes, (float, int)):
+        if grid.n_dim == 1:
+            stepsizes = [stepsizes]
+        else:  # expand to all dimensions
+            stepsizes = [stepsizes] * grid.n_dim
+    grid.stepsizes = copy.deepcopy(stepsizes)
+    for i, r in enumerate(ranges):
+        n_points_tmp = int(np.ceil((r[1] - r[0]) / stepsizes[i])) + 1 - int(shrink)
+        grid.ranges.append((float(r[0]), r[0] + stepsizes[i] * (n_points_tmp - 1)))
+        grid.n_points.append(n_points_tmp)
+    return grid
+
+
+def sparsify(g: Grid, max_points: List[int], method: str = "linear") -> Grid:
+    """Return sparser version of grid (same range but fewer points)
+
+    If the specified number of points is larger than the datapoints
+    in the original grid, this will leave the number of points unchanged
+
+    :param g: grid to sparsify
+    :param max_points: desired number of points per dimension
+    :param method: interpolation method to use, default "linear"
+    :return sparse_grid: sparsified Grid instance
+    """
+    sparse_n_points = [
+        n if n <= max_points[i] else max_points[i] for i, n in enumerate(g.n_points)
+    ]
+    sparse_grid = from_npoints(g.ranges, sparse_n_points)
+    sparse_grid.data = g.interpolate(sparse_grid.points(), method)
+    return sparse_grid
+
+
+def create_compact_kernel(grid: Grid, bandwidth: float, range_val: float) -> Grid:
+    """
+    Create a new kernel with strictly compact support.
+
+    :param grid: The original grid.
+    :param bandwidth: Bandwidth of the kernel.
+    :param range_val: Range of the kernel.
+    :return: New grid with the compact kernel.
+    """
+    # Ensure the kernel support is a square and perfectly commensurate
+    n_points = [int(np.round((r[1] - r[0]) / (bandwidth / 5))) + 1 for r in grid.ranges]
+    kernel_grid = from_npoints(grid.ranges, n_points)
+    kernel_grid.data = np.array([kernel_function(p, bandwidth, range_val) for p in kernel_grid.points()])
+    return kernel_grid
+
+def kernel_function(point: np.ndarray, bandwidth: float, range_val: float) -> float:
+    """
+    Define the compact kernel function using piecewise parabolas.
+
+    :param point: Point at which to evaluate the kernel.
+    :param bandwidth: Bandwidth of the kernel.
+    :param range_val: Range of the kernel.
+    :return: Kernel value at the given point.
+    """
+    if np.all(np.abs(point) <= range_val):
+        return (1 - (np.sum(point ** 2) / bandwidth ** 2)) ** 2
+    return 0
+
+def convolve_with_kernel(grid: Grid, kernel: Grid) -> Grid:
+    """
+    Convolve the grid data with the given compact kernel.
+
+    :param grid: Original grid with data.
+    :param kernel: Compact kernel grid.
+    :return: Convolved grid.
+    """
+    convolved_data = signal.convolve2d(grid.data, kernel.data, mode='same', boundary='wrap')
+    convolved_grid = grid.copy_empty()
+    convolved_grid.data = convolved_data
+    return convolved_grid
+
+# Example usage
+ranges = [(-1, 1), (-1, 1)]
+grid = from_stepsizes(ranges, 0.1)
+grid.set_from_func(lambda x: np.exp(-np.sum(np.array(x) ** 2)))
+
+# Create and convolve with the new compact kernel
+bandwidth = 0.5
+range_val = 1.0
+kernel = create_compact_kernel(grid, bandwidth, range_val)
+convolved_grid = convolve_with_kernel(grid, kernel)
+
+# Print or manipulate convolved_grid as needed
+print(convolved_grid.data)
+
+
+
+
+
+
+
+
+
+
+
+
+
