@@ -444,9 +444,15 @@ def create_compact_kernel(grid: Grid, bandwidth: float, range_val: float) -> Gri
     :return: New grid with the compact kernel.
     """
     # Ensure the kernel support is a square and perfectly commensurate
+    # Calculate the number of points per dimension for the kernel grid
     n_points = [int(np.round((r[1] - r[0]) / (bandwidth / 5))) + 1 for r in grid.ranges]
+    
+    # Create a new grid for the kernel
     kernel_grid = from_npoints(grid.ranges, n_points)
+    
+    # Compute the kernel values for each point in the grid using the kernel_function
     kernel_grid.data = np.array([kernel_function(p, bandwidth, range_val) for p in kernel_grid.points()])
+    
     return kernel_grid
 
 def kernel_function(point: np.ndarray, bandwidth: float, range_val: float) -> float:
@@ -476,18 +482,18 @@ def convolve_with_kernel(grid: Grid, kernel: Grid) -> Grid:
     return convolved_grid
 
 # Example usage
-ranges = [(-1, 1), (-1, 1)]
-grid = from_stepsizes(ranges, 0.1)
-grid.set_from_func(lambda x: np.exp(-np.sum(np.array(x) ** 2)))
+#ranges = [(-1, 1), (-1, 1)]
+#grid = from_stepsizes(ranges, 0.1)
+#grid.set_from_func(lambda x: np.exp(-np.sum(np.array(x) ** 2)))
 
 # Create and convolve with the new compact kernel
-bandwidth = 0.5
-range_val = 1.0
-kernel = create_compact_kernel(grid, bandwidth, range_val)
-convolved_grid = convolve_with_kernel(grid, kernel)
+#bandwidth = 0.5
+#range_val = 1.0
+#kernel = create_compact_kernel(grid, bandwidth, range_val)
+#convolved_grid = convolve_with_kernel(grid, kernel)
 
-# Print or manipulate convolved_grid as needed
-print(convolved_grid.data)
+# Print convolved_grid as needed
+#print(convolved_grid.data)
 
 
 
