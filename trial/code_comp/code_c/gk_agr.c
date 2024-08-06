@@ -108,10 +108,7 @@ int main()
 
 double potential(double x)
 {
-    double potential_value = 0.;
-    potential_value = x * x;
-    potential_value = 0.25 * potential_value * potential_value - 0.5 * potential_value;
-    return (potential_value);
+    return x*x*x*x - 4*x*x + 0.2*x;
 }
 
 double gaussian_kernel(double x, double sigma)
