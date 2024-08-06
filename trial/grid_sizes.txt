@@ -1,0 +1,5 @@
+Sigma: 0.5, Grid Size: 5
+Sigma: 1.0, Grid Size: 11
+Sigma: 2.0, Grid Size: 21
+Sigma: 3.0, Grid Size: 31
+Sigma: 4.0, Grid Size: 41
