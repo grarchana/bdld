@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Potential function V(x)
+# Potential function V(x) (updated)
 def potential(x):
     return x**4 - 4*x**2 + 0.2*x
 
@@ -69,6 +69,6 @@ plt.ylabel('Values')
 plt.title('Potential and Density')
 plt.legend()
 plt.grid(True)
-plt.savefig('density_plot_bwo5.png', dpi=300)
+plt.savefig('density_plot_bwo5_gk.png', dpi=300)
 plt.show()
 
